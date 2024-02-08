@@ -1,5 +1,8 @@
 
+
 # [PIC32M Family Reference Manual](https://microchipdeveloper.com/xwiki/bin/view/products/mcu-mpu/32bit-mcu/PIC32/family-reference-pages/manual/)
+
+1. [Section 23. Serial Peripheral Interface (SPI)](https://ww1.microchip.com/downloads/en/DeviceDoc/61106G.pdf)
 
 1. [Section 50. CPU for Devices with MIPS32® microAptiv™ and M-Class Cores](https://ww1.microchip.com/downloads/en/DeviceDoc/60001192B.pdf)
 
