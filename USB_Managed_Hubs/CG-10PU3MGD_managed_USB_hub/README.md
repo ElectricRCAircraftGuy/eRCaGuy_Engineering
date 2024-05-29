@@ -154,6 +154,12 @@ cusbc //S:COM7 T:ALL     # Toggle all ports
 cusbc //F:COM7 0:1,2     # Turn OFF port 1 and 2 and save these states to flash as the initial states
 ```
 
+[BEST] To easily query the hub's state after each command, simply append `&& cusbc //G:COM7` to each command, like this:
+```bash
+cusbc //S:COM7 0:1 && cusbc //G:COM7  # Turn OFF port 1, then query the hub's state
+cusbc //S:COM7 1:1 && cusbc //G:COM7  # Turn ON port 1, then query the hub's state
+```
+
 Note that if also running the GUI application on Windows, you must click the "Auto Search" button, as shown below, to refresh the GUI with the latest status of the hub (as shown in the right panel in the GUI) if you have changed its state using the CLI tool. Clicking that button makes it update the GUI status:
 
 <p align="left" width="100%">
@@ -161,9 +167,3 @@ Note that if also running the GUI application on Windows, you must click the "Au
         <img width="100%" src="https://github.com/ElectricRCAircraftGuy/eRCaGuy_Engineering/assets/6842199/11887400-51e3-4d1c-9862-7ab60d804df1"> 
     </a>
 </p>
-
-[BEST] To easily query the hub's state after each command, simply append `&& cusbc //G:COM7` to each command, like this:
-```bash
-cusbc //S:COM7 0:1 && cusbc //G:COM7  # Turn OFF port 1, then query the hub's state
-cusbc //S:COM7 1:1 && cusbc //G:COM7  # Turn ON port 1, then query the hub's state
-```
