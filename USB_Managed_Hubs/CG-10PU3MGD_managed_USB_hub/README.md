@@ -1,6 +1,14 @@
 
 # CG-10PU3MGD 10 Port Managed USB 3.2 Gen 1 Hub w/ 15KV ESD Surge Protection Per Port ($175 + $28 power supply)
 
+
+## See also
+
+1. https://github.com/ElectricRCAircraftGuy/eRCaGuy_hello_world/tree/master/pic32 - Microchip PIC32 readme and info, including on the PICKit 5 debugger.
+
+
+## Ordering and software downloads
+
 1. Order page: 
     1. Hub ($175): https://www.usbgear.com/cg-10pu3mgd.html
     1. Power supply ($28): https://www.usbgear.com/cg-10pu3mgd.html - an external power supply is required to power this hub.
@@ -23,6 +31,17 @@
 1. Turning off a USB port does *not* disconnect the USB _data pins_ to that device. It only disconnects the _power_ to the device. 
 
     So, if the USB device is powered externally, meaning _separately from_ the main USB plug going into the USB port, then turning off that port will NOT disconnect this USB device. This can happen, for instance, when a PIC32 [PICKit 5](https://www.microchip.com/en-us/development-tool/pg164150) microcontroller debugger is plugged into a target board via an ICSP cable, and the target device provides power to the power pin on the ICSP cable, thereby _powering the debugger from the target_. In such a case, if you'd like to remotely power cycle the debugger, you must disconnect the power cable from the ICSP cable going to the debugger, _or_ turn off that USB port on the hub _and_ power cycle the target. 
+
+    **PICKit 5 debugger notes:** 
+
+    If you see this error, however, when trying to debug:
+
+    > The configuration is set for the target board to supply its own power but no voltage has been detected on VDD. Please ensure you have your target powered up and try again.  
+    > Connection Failed.
+
+    Then you must change this setting: right-click on project --> Properties --> click on your `Conf: [MY CONFIGURATION]`, then choose the PICKit in the "Connected Hardware Tool" dropdown menu. Now under that `Conf` line in the left pane, click "PICKit 5" --> in the "Option categories" dropdown menu, choose "Power" --> check the box for "Power target circuit from PICkit 5" --> click "Apply" and "OK" at the bottom. 
+    
+    Even though that power wire going to the target is now disconnected so it does nothing, this at least lets us get past the error above because it tells the tool to quit looking for a voltage from the target on this line to see that the target is connected. Now, since the debugger is providing power on this line, it just *assumes* the target is connected since it can't read this line to check anymore.
 
 
 ## CLI interface
