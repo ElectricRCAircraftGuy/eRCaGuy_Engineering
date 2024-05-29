@@ -1,10 +1,11 @@
 
-# CG-10PU3MGD 10 Port Managed USB 3.2 Gen 1 Hub w/ 15KV ESD Surge Protection Per Port ($175 + $28 power supply)
 
-
-## See also
+# See also
 
 1. https://github.com/ElectricRCAircraftGuy/eRCaGuy_hello_world/tree/master/pic32 - Microchip PIC32 readme and info, including on the PICKit 5 debugger.
+
+
+# CG-10PU3MGD 10 Port Managed USB 3.2 Gen 1 Hub w/ 15KV ESD Surge Protection Per Port ($175 + $28 power supply)
 
 
 ## Ordering and software downloads
