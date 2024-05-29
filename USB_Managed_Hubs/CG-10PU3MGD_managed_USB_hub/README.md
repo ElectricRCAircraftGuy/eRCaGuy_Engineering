@@ -22,7 +22,7 @@
 1. An external power supply is required to power this hub. See the recommended one above for $28.
 1. Turning off a USB port does *not* disconnect the USB _data pins_ to that device. It only disconnects the _power_ to the device. 
 
-    So, if the USB device is powered externally from the main USB plug going into the USB port, then turning off that port will NOT disconnect this USB device. This can happen, for instance, when a PIC32 [PICKit 5](https://www.microchip.com/en-us/development-tool/pg164150) microcontroller debugger is plugged into a target board via an ICSP cable, and the target device provides power to the power pin on the ICSP cable, thereby _powering the debugger from the target_. In such a case, if you'd like to remotely power cycle the debugger, you must disconnect the power cable from the ICSP cable going to the debugger, _or_ turn off that USB port on the hub _and_ power cycle the target. 
+    So, if the USB device is powered externally, meaning _separately from_ the main USB plug going into the USB port, then turning off that port will NOT disconnect this USB device. This can happen, for instance, when a PIC32 [PICKit 5](https://www.microchip.com/en-us/development-tool/pg164150) microcontroller debugger is plugged into a target board via an ICSP cable, and the target device provides power to the power pin on the ICSP cable, thereby _powering the debugger from the target_. In such a case, if you'd like to remotely power cycle the debugger, you must disconnect the power cable from the ICSP cable going to the debugger, _or_ turn off that USB port on the hub _and_ power cycle the target. 
 
 
 ## CLI interface
