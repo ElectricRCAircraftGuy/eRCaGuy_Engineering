@@ -31,16 +31,20 @@
 1. An external power supply is required to power this hub. See the recommended one above for $28.
 1. Turning off a USB port does *not* disconnect the USB _data pins_ to that device. It only disconnects the _power_ to the device. 
 
-    So, if the USB device is powered externally, meaning _separately from_ the main USB plug going into the USB port, then turning off that port will NOT disconnect this USB device. This can happen, for instance, when a PIC32 [PICKit 5](https://www.microchip.com/en-us/development-tool/pg164150) microcontroller debugger is plugged into a target board via an ICSP cable, and the target device provides power to the power pin on the ICSP cable, thereby _powering the debugger from the target_. In such a case, if you'd like to remotely power cycle the debugger, you must disconnect the power cable from the ICSP cable going to the debugger, _or_ turn off that USB port on the hub _and_ power cycle the target. 
+    So, if the USB device is powered externally, meaning _separately from_ the main USB plug going into the USB port, then turning off that port will NOT disconnect this USB device. This can happen, for instance, when a PIC32 [PICKit 5](https://www.microchip.com/en-us/development-tool/pg164150) microcontroller debugger is plugged into a target board via an ICSP cable, and the target device provides power to the power pin on the ICSP cable, thereby _powering the debugger from the target_. In such a case, if you'd like to remotely power cycle the debugger, you must _disconnect the power cable from the ICSP cable going to the debugger_, _or_ turn off that USB port on the hub _and_ power cycle the target. 
 
     **PICKit 5 debugger notes:** 
 
-    If you see this error, however, when trying to debug:
+    If you disconnect the power cable from the ICSP cable going to the debugger, be sure to tape it with Kapton (polyimide) or electrical tape to prevent shorts. Kapton/polyimide tape is best because it leaves no residue. 
+    
+    You will now see this error in the MPLAB X IDE when trying to start the debugger:
 
     > The configuration is set for the target board to supply its own power but no voltage has been detected on VDD. Please ensure you have your target powered up and try again.  
     > Connection Failed.
 
-    Then you must change this setting: right-click on project --> Properties --> click on your `Conf: [MY CONFIGURATION]`, then choose the PICKit in the "Connected Hardware Tool" dropdown menu. Now under that `Conf` line in the left pane, click "PICKit 5" --> in the "Option categories" dropdown menu, choose "Power" --> check the box for "Power target circuit from PICkit 5" --> click "Apply" and "OK" at the bottom. 
+    This is because the PICkit 5 uses the power wire to _detect power in the target_ to see that the target is connected. Fix this by turning on power on that power wire in the debugger instead: 
+
+    Right-click on project --> Properties --> click on your `Conf: [MY CONFIGURATION]`, then choose the PICKit in the "Connected Hardware Tool" dropdown menu. Now under that `Conf` line in the left pane, click "PICKit 5" --> in the "Option categories" dropdown menu, choose "Power" --> check the box for "Power target circuit from PICkit 5" --> click "Apply" and "OK" at the bottom. 
     
     Even though that power wire going to the target is now disconnected so it does nothing, this at least lets us get past the error above because it tells the tool to quit looking for a voltage from the target on this line to see that the target is connected. Now, since the debugger is providing power on this line, it just *assumes* the target is connected since it can't read this line to check anymore.
 
