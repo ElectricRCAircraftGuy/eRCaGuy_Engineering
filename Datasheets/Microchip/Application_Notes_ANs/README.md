@@ -26,4 +26,17 @@
         1. The license agreement that comes up when you run the source code .exe installer above. 
 
 
+## PIC32 `#pragma config` Device Configuration Registers
+
+See: 
+1. https://developerhelp.microchip.com/xwiki/bin/view/products/mcu-mpu/32bit-mcu/PIC32/configuration-registers/
+1. [../XC32_Compiler/MPLAB-XC32-Compiler-UG-PIC32M-DS-50002799 [XC32 Compiler User's Guide for PIC32M]_GS_edit.pdf](<../XC32_Compiler/MPLAB-XC32-Compiler-UG-PIC32M-DS-50002799 [XC32 Compiler User's Guide for PIC32M]_GS_edit.pdf>)
+1. \*\*\*\*\*+[`/opt/microchip/xc32/v1.42/docs/config_docs/32mz2048efm144.html`](/opt/microchip/xc32/v1.42/docs/config_docs/32mz2048efm144.html) - this fully describes all `#pragma config` settings for the PIC32MZ2048EFM144 microcontroller, for example, for this XC32 v1.42 compiler version.
+    1. See also the descriptions and default values here: [`~/microchip/harmony/v2_01b/utilities/mhc/config/PIC32MZ2048EFM144.hconfig`](<../../../../../../microchip/harmony/v2_01b/utilities/mhc/config/PIC32MZ2048EFM144.hconfig>)
+1. Default generic (non-chip-specifici) `.ld` linker script file (ends in `.x` here, but is a _generic, non-chip-specific_ `.ld` linker script nonetheless): [`/opt/microchip/xc32/v1.42/pic32mx/lib/ldscripts/elf32pic32mx.x`](/opt/microchip/xc32/v1.42/pic32mx/lib/ldscripts/elf32pic32mx.x)
+    1. From step 3 in Appendix C on p11 of [`AN1388-PIC32 Bootloader-01388B [qpdf --decrypt]_GS_edit.pdf`](<AN1388-PIC32 Bootloader-01388B [qpdf --decrypt]_GS_edit.pdf>).
+    1. \*\*\*\*\*Example full linker script for a particular chip: [`/opt/microchip/xc32/v1.42/pic32mx/lib/proc/32MZ2048EFM144/p32MZ2048EFM144.ld`](/opt/microchip/xc32/v1.42/pic32mx/lib/proc/32MZ2048EFM144/p32MZ2048EFM144.ld) - "Default linker script, for normal executables" (see the top of the file, line 38).
+    1. [`/opt/microchip/xc32/v1.42/pic32mx/lib/proc/32MZ2048EFM144/p32MZ2048EFM144_pic.ld`](/opt/microchip/xc32/v1.42/pic32mx/lib/proc/32MZ2048EFM144/p32MZ2048EFM144_pic.ld) - "Default linker script, for position independent executables" (see the top of the file, line 38).
+        - I don't yet understand the differences.
+
 
