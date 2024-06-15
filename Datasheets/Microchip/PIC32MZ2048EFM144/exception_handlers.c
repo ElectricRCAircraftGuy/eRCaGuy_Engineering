@@ -141,10 +141,12 @@ void __attribute__((nomips16)) _general_exception_handler()
 {
     /* Mask off the ExcCode Field from the Cause Register
     Refer to the MIPs Software User's manual */
-    uint8_t _excep_code;
-    uint8_t _excep_addr;
-    const char * _cause_str_short;
-    const char * _cause_str_long;
+    // GS: make `volatile` so that the compiler doesn't optimize these variables away, so that we
+    // can actually read them with the debugger when debugging. 
+    volatile uint8_t _excep_code;
+    volatile uint8_t _excep_addr;
+    volatile const char * _cause_str_short;
+    volatile const char * _cause_str_long;
     // If desired while debugging, you may manually change this variable to `true` to exit the
     // exception handler and return to the main program where the exception occurred.
     volatile bool exit_exception_handler = false;
