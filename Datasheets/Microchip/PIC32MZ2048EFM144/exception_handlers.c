@@ -129,10 +129,15 @@ static const char * general_exception_cause_short[32] =
 // See also: 
 // 1. "eRCaGuy_Engineering/Datasheets/Microchip/README_exceptions_and_handlers.md"
 //
-// Note: **possibly** do this instead to not allow the simpler MIPS16 instructions:
-// void __attribute__((nomips16)) _general_exception_handler()
-//
-void _general_exception_handler()
+// NB: You **must** use the `nomips16` attribute as well! See here: 
+// 1. *****Here where they say it's required:
+//    https://developerhelp.microchip.com/xwiki/bin/view/products/mcu-mpu/32bit-mcu/PIC32/mx-arch-cpu-overview/exception-mechanism/usage/:
+//    > The handler must be attributed with the "nomips16" attribute [e.g., _attribute_((nomips16))]
+//    > since the start-up code jumps to this function.
+// 2. Here where they recommend it: 
+//    https://forum.microchip.com/s/topic/a5C3l000000MDm0EAG/t283004?comment=P-2237738
+// void _general_exception_handler()
+void __attribute__((nomips16)) _general_exception_handler()
 {
     /* Mask off the ExcCode Field from the Cause Register
     Refer to the MIPs Software User's manual */
@@ -140,6 +145,9 @@ void _general_exception_handler()
     uint8_t _excep_addr;
     const char * _cause_str_short;
     const char * _cause_str_long;
+    // If desired while debugging, you may manually change this variable to `true` to exit the
+    // exception handler and return to the main program where the exception occurred.
+    volatile bool exit_exception_handler = false;
 
     _excep_code = (_CP0_GET_CAUSE() & 0x0000007C) >> 2;  // Note that 0x7C = 0b01111100
     _excep_addr = _CP0_GET_EPC();
@@ -158,7 +166,7 @@ void _general_exception_handler()
     // by the FreeRTOS idle task hook (`void vApplicationIdleHook( void );`--see: 
     // https://www.freertos.org/a00016.html) which one should add to service it. 
     // - Note: disabling interrupts above is what stops the FreeRTOS scheduler from running. 
-    while(true)
+    while (exit_exception_handler == false)
     {
         _nop();
     }

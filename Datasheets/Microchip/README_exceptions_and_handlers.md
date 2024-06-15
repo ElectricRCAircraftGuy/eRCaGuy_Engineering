@@ -16,6 +16,10 @@
     ```c
     void __attribute__((nomips16)) _general_exception_handler(void);
     ```
+1. https://developerhelp.microchip.com/xwiki/bin/view/products/mcu-mpu/32bit-mcu/PIC32/mx-arch-cpu-overview/exception-mechanism/usage/ - says that you *must* use the `nomips16` attribute!: 
+    ```c
+    void __attribute__((nomips16)) _general_exception_handler(void);
+    ```
 
 
 # PIC32 Exceptions and Handlers
