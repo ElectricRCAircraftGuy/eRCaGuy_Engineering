@@ -1,0 +1,3 @@
+[submodule "Datasheets/Microchip/Bootloaders/bootloader_apps_ethernet"]
+	path = Datasheets/Microchip/Bootloaders/bootloader_apps_ethernet
+	url = https://github.com/Microchip-MPLAB-Harmony/bootloader_apps_ethernet.git
