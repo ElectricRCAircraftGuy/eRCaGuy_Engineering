@@ -136,6 +136,10 @@ static const char * general_exception_cause_short[32] =
 //    > since the start-up code jumps to this function.
 // 2. Here where they recommend it: 
 //    https://forum.microchip.com/s/topic/a5C3l000000MDm0EAG/t283004?comment=P-2237738
+//
+// For the `_CP0_GET_*()` macros, see the Coprocessor 0 (CP0) header file, here for example:
+// "/opt/microchip/xc32/v4.35/pic32mx/include/pic32m-libs/cp0defs.h"
+//
 // void _general_exception_handler()
 void __attribute__((nomips16)) _general_exception_handler()
 {
@@ -144,17 +148,48 @@ void __attribute__((nomips16)) _general_exception_handler()
     // GS: make `volatile` so that the compiler doesn't optimize these variables away, so that we
     // can actually read them with the debugger when debugging. 
     volatile uint8_t _excep_code;
-    volatile uint8_t _excep_addr;
     volatile const char * _cause_str_short;
     volatile const char * _cause_str_long;
+    
+    // This is the entire "Register 50-25: EPC: Exception Program Counter Register; CP0 Register 14,
+    // Select 0" on p74 of "Section 50. CPU for Devices with MIPS32® microAptiv™ and M-Class
+    // Cores-60001192B (qpdf --decrypt)_GS_edit.pdf". 
+    // So, it's 32 bits. 
+    //
+    // "The Exception Program Counter (EPC) is a read/write register that contains the address at
+    // which processing resumes after an exception has been serviced."
+    // See: p74 of the "Section 50" manual. 
+    volatile uint32_t _excep_addr;
+    
+    // "The NestedEPC register is a read/write register with the same behavior as the EPC register,
+    // with the following exceptions:..."
+    // - p75 of the "Section 50" manual.
+    volatile uint32_t _excep_addr_nested;
+    
+    // "Captures the virtual address that caused the most recent address error exception."
+    // - p53 of the "Section 50" manual.
+    //
+    // GS: this is valid, I **think**, for the following exceptions: 
+    // 1. Address error exceptions:
+    //      AdEL
+    //      AdES
+    // 2. For MPU-core mcus only: TLB exceptions:
+    //      MOD
+    //      TLBL
+    //      TLBLS
+    //
+    volatile uint32_t _bad_virtual_addr; 
+    
     // If desired while debugging, you may manually change this variable to `true` to exit the
     // exception handler and return to the main program where the exception occurred.
     volatile bool exit_exception_handler = false;
 
     _excep_code = (_CP0_GET_CAUSE() & 0x0000007C) >> 2;  // Note that 0x7C = 0b01111100
-    _excep_addr = _CP0_GET_EPC();
     _cause_str_short  = general_exception_cause_short[_excep_code];
     _cause_str_long  = general_exception_cause_long[_excep_code];
+    _excep_addr = _CP0_GET_EPC();
+	_excep_addr_nested = _CP0_GET_NESTEDEPC();
+	_bad_virtual_addr = _CP0_GET_BADVADDR();
 
     // Disable interrupts. See the compiler user manual Section 18.8: "Enabling/Disabling
     // Interrupts": 
