@@ -1,5 +1,5 @@
 # eRCaGuy_Engineering
-General engineering equation sheets, notes, knowledge, links, etc, including **electrical** and **aeronautical** Engineering
+General engineering equation sheets, notes, knowledge, links, etc, including **electrical** and **aeronautical** engineering
 
 
 # Submodules
