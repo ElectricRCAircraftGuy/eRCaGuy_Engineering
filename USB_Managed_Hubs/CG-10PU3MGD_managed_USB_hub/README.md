@@ -12,7 +12,7 @@
 
 1. Order page: 
     1. Hub ($175): https://www.usbgear.com/cg-10pu3mgd.html
-    1. Power supply ($28): https://www.usbgear.com/cg-10pu3mgd.html - an external power supply is required to power this hub.
+    1. Power supply ($28): https://www.usbgear.com/12V7A2P-B.html - an external power supply is required to power this hub.
 1. Manufacturer's page [software download here]: https://www.coolgear.com/product/10-port-managed-usb-3-hub-w-15kv-esd-surge-protection-on-off-per-port-control-software
     1. User manual: https://www.coolgear.com/wp-content/uploads/2020/12/CG-10Pu3MGD-Installation-Guide.pdf
     1. Software: (link above) --> Drivers & Software --> choose the correct one for your OS (Windows, Mac, or Linux)
@@ -63,21 +63,27 @@ _Tested on Linux Ubuntu 22.04 and in Windows 10._
 Notice that in Git Bash on Windows you must use `//` instead of `/` for the command line options.
 
 ```bash
+# ------------------------------
 # Linux terminal
+# ------------------------------
 # Help menu
 ./cusbi /h
 ./cusbi /?  # (same as above)
 # Query all USB hubs connected
 ./cusbi /Q
 
+# ------------------------------
 # Windows Command Prompt
+# ------------------------------
 # Help menu
 cusbc /h
 cusbc /?  # (same as above)
 # Query all USB hubs connected
 cusbc /Q
 
+# ------------------------------
 # Windows Git Bash terminal
+# ------------------------------
 cusbc //h
 cusbc //?  # (same as above)
 # Query all USB hubs connected
