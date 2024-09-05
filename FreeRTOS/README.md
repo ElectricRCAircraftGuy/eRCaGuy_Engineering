@@ -12,7 +12,7 @@
 1. Official FreeRTOS source code: https://github.com/FreeRTOS
     1. Official FreeRTOS kernel source code: https://github.com/FreeRTOS/FreeRTOS-Kernel
         1. Example `FreeRTOSConfig.h` file: https://github.com/FreeRTOS/FreeRTOS-Kernel/blob/main/examples/template_configuration/FreeRTOSConfig.h
-        1. My modifications to the above file: [`FreeRTOSConfig_GS_customizations.h`](FreeRTOSConfig_GS_customizations.h)
+        1. My modifications to the above file: [`eRCaGuy_hello_world/FreeRTOS/FreeRTOSConfig_GS_customizations.h`](https://github.com/ElectricRCAircraftGuy/eRCaGuy_hello_world/blob/master/FreeRTOS/FreeRTOSConfig_GS_customizations.h)
         1. Compare to see my modifications:
             ```bash
             meld FreeRTOSConfig.h FreeRTOSConfig_GS_customizations.h
