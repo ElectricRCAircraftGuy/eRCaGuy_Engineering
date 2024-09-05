@@ -135,6 +135,14 @@ In summary, you can create tasks, queues, semaphores, event groups, timers, stre
 <a id="freertos-critical-section-calls"></a>
 # AI: Which FreeRTOS API calls are and are not allowed to be called within a critical section specified by `taskENTER_CRITICAL()` and `taskEXIT_CRITICAL()`?
 
+Important!: 
+
+> FreeRTOS API functions must not be called from within a critical section.
+
+See: https://www.freertos.org/Documentation/02-Kernel/04-API-references/04-RTOS-kernel-control/01-taskENTER_CRITICAL_taskEXIT_CRITICAL
+
+---
+
 I prompted this question to GitHub Copilot. 
 
 Answer: 
