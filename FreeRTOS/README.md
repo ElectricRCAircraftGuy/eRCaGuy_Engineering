@@ -29,9 +29,30 @@
     1. The FreeRTOS Reference Manual: https://freertos.org/media/2018/FreeRTOS_Reference_Manual_V10.0.0.pdf
 
 
+# FreeRTOS undefined behavior and crashes at startup
+
+
 # AI: Which FreeRTOS API calls are and are not allowed prior to calling `vTaskStartScheduler()`?
 
-Prompt to GitHub Copilot:
+
+## My own research
+
+For example:  
+
+Only try to take or give a mutex if the FreeRTOS scheduler is running. Otherwise, it is undefined behavior to try to do so while the scheduler is not running.
+
+(Emphasis added):
+
+> ### 13.5.6 Symptom: The application crashes even before the scheduler is started
+>
+> An interrupt service routine **that could potentially cause a context switch must not be permitted to execute before the scheduler has been started.** The same applies to any interrupt service routine that attempts to send to or receive from a FreeRTOS object, such as a **queue or semaphore.** A context switch cannot occur until after the scheduler has started.
+> 
+> Many API functions cannot be called until after the scheduler has been started. It is best to restrict API usage to the creation of objects such as tasks, queues, and semaphores, rather than the use of these objects, **until after `vTaskStartScheduler()` has been called.**
+
+Source: https://github.com/FreeRTOS/FreeRTOS-Kernel-Book/blob/main/ch13.md#1356-symptom-the-application-crashes-even-before-the-scheduler-is-started
+
+
+## Prompt to GitHub Copilot
 
 > Which FreeRTOS API calls are and are not allowed prior to calling vTaskStartScheduler()?
 
@@ -135,13 +156,29 @@ In summary, you can create tasks, queues, semaphores, event groups, timers, stre
 <a id="freertos-critical-section-calls"></a>
 # AI: Which FreeRTOS API calls are and are not allowed to be called within a critical section specified by `taskENTER_CRITICAL()` and `taskEXIT_CRITICAL()`?
 
-Important!: 
+
+## My own research
+
+Important! (emphasis added): 
+
+> ### 13.5.7 Symptom: Calling API functions while the scheduler is suspended, or from inside a critical section, causes the application to crash
+>
+> The scheduler is suspended by calling `vTaskSuspendAll()` and resumed (unsuspended) by calling `xTaskResumeAll()`. A critical section is entered by calling `taskENTER_CRITICAL()`, and exited by calling `taskEXIT_CRITICAL()`.
+> 
+> **Do not call API functions while the scheduler is suspended, or from inside a critical section.**
+
+Source: https://github.com/FreeRTOS/FreeRTOS-Kernel-Book/blob/main/ch13.md#1357-symptom-calling-api-functions-while-the-scheduler-is-suspended-or-from-inside-a-critical-section-causes-the-application-to-crash
+
+And:
 
 > FreeRTOS API functions must not be called from within a critical section.
 
-See: https://www.freertos.org/Documentation/02-Kernel/04-API-references/04-RTOS-kernel-control/01-taskENTER_CRITICAL_taskEXIT_CRITICAL
+Source: https://www.freertos.org/Documentation/02-Kernel/04-API-references/04-RTOS-kernel-control/01-taskENTER_CRITICAL_taskEXIT_CRITICAL
 
 ---
+
+
+## Prompt to GitHub Copilot
 
 I prompted this question to GitHub Copilot. 
 
